@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Caixa Eletrônico</title>
+</head>
+<body>
+    <h1>Caixa Eletrônico</h1>
+    <p>Informe o número da conta:</p>
+    <input type="text" id="accountNumber">
+    <p>Informe a senha:</p>
+    <input type="password" id="password">
+    <br><br>
+    <button onclick="login()">Entrar</button>
+    <br><br>
+    <p id="message"></p>
+    <h2>Operações:</h2>
+    <button onclick="withdraw()">Sacar</button>
+    <button onclick="deposit()">Depositar</button>
+    <br><br>
+    <p>Saldo: <span id="balance">0</span> reais</p>
+
+    <script>
+        const accounts = {
+            "123456": {
+                password: "1234",
+                balance: 3000
+            }
+            // Adicione mais contas aqui, se necessário
+        };
+
+        let currentAccount = null;
+
+        function login() {
+            const accountNumber = document.getElementById("accountNumber").value;
+            const password = document.getElementById("password").value;
+
+            if (accounts.hasOwnProperty(accountNumber) && accounts[accountNumber].password === password) {
+                currentAccount = accountNumber;
+                document.getElementById("message").textContent = "Login bem-sucedido.";
+                document.getElementById("balance").textContent = accounts[currentAccount].balance;
+            } else {
+                document.getElementById("message").textContent = "Login falhou. Verifique as credenciais.";
+            }
+        }
+
+        function withdraw() {
+            if (currentAccount !== null) {
+                const amount = parseFloat(prompt("Digite o valor para saque:"));
+                if (!isNaN(amount) && amount > 0 && amount <= accounts[currentAccount].balance) {
+                    accounts[currentAccount].balance -= amount;
+                    document.getElementById("balance").textContent = accounts[currentAccount].balance;
+                } else {
+                    alert("Valor de saque inválido.");
+                }
+            } else {
+                alert("Faça o login antes de realizar operações.");
+            }
+        }
+
+        function deposit() {
+            if (currentAccount !== null) {
+                const amount = parseFloat(prompt("Digite o valor para depósito:"));
+                if (!isNaN(amount) && amount > 0) {
+                    accounts[currentAccount].balance += amount;
+                    document.getElementById("balance").textContent = accounts[currentAccount].balance;
+                } else {
+                    alert("Valor de depósito inválido.");
+                }
+            } else {
+                alert("Faça o login antes de realizar operações.");
+            }
+        }
+    </script>
+</body>
+</html>
