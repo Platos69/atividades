@@ -7,5 +7,15 @@
   "trailingComma": "all",
   "bracketSpacing": true,
   "jsxBracketSameLine": false,
-  "arrowParens": "always"
+  "arrowParens": "always",
+  "overrides": [
+    {
+      "files": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.vue", "**/*.html", "**/*.md"],
+      "options": {
+        "singleQuote": true
+      }
+    }
+  ]
 }
+
+
